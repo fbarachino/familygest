@@ -62,7 +62,7 @@ config/
 ### Moduli Iniziali (In Sviluppo)
 - [ ] **FamilyMembers** - Gestione membri famiglia, profili e relazioni
 - [ ] **Documents** - Gestione documenti, archivio digitale con export PDF
-- [ ] **Evonomy** - Gestione delle entrate e delle uscite con rendicontazione mensile in base alle categorie
+- [ ] **Economy** - Gestione delle entrate e delle uscite con rendicontazione mensile in base alle categorie
 
 ### Moduli Futuri (Placeholder)
 - [ ] [Modulo aggiuntivo 1]
