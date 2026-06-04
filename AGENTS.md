@@ -86,6 +86,9 @@ config/
 - **dompdf** per la generazione dinamica di documenti PDF
 - Utilizzo per report, certificati, esportazioni da moduli
 
+## REST API
+- **sanctum** per le API in quanto l' applicazione avrà anche una app Android che potrà inserire i dati
+
 ## 🚀 Roadmap Sviluppo
 
 1. ✅ Setup infrastruttura base Laravel 13
