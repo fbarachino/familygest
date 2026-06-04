@@ -11,7 +11,7 @@
 - **jeroennoten/laravel-adminlte** - Template amministrativo responsivo e professionale
 - **spatie/backup-laravel** - Sistema di backup automatico per database e file
 - **dompdf/dompdf** - Generazione di documenti PDF dinamici
-
+- **maatwebsite/excel** - Generazione di file Excel/ods dinamici
 ## 🏗️ Architettura
 
 ### Approccio Modulare/Plugin
