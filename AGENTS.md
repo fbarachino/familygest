@@ -73,6 +73,7 @@ config/
 
 - **Template AdminLTE** - Interfaccia admin-style responsiva
 - **Layout personalizzato** - Dashboard principale e moduli specifici
+- **Layout in PDF** - professionali e compatti con colori tendenti al verdino o arancine pastello.
 
 ## 💾 Backup e Sicurezza
 
