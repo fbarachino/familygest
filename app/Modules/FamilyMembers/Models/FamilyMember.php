@@ -2,10 +2,12 @@
 
 namespace App\Modules\FamilyMembers\Models;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Database\Factories\FamilyMemberFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +27,13 @@ class FamilyMember extends Model
         'indirizzo',
         'foto',
         'note',
+        'user_id',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected function casts(): array
     {

@@ -19,7 +19,8 @@
 
 #### Modulo FamilyMembers
 - [x] **Migration**: `family_members` con campi estesi (nome, cognome, data_nascita, luogo_nascita, relazione, CF, telefono, email, indirizzo, foto, note + soft delete)
-- [x] **Model**: `FamilyMember` con `$fillable`, `$casts`, attributo calcolato `eta`, accessor `foto_url`, soft deletes, factory
+- [x] **Model**: `FamilyMember` con `$fillable`, `$casts`, attributo calcolato `eta`, accessor `foto_url`, soft deletes, factory, relazione `belongsTo User`
+- [x] **User Model**: relazione `hasMany FamilyMember`
 - [x] **Form Requests**: `StoreFamilyMemberRequest` e `UpdateFamilyMemberRequest` con validazione completa
 - [x] **Web Controller**: CRUD completo con upload foto
 - [x] **API Controller**: CRUD RESTful JSON protetto da `auth:sanctum`
@@ -28,6 +29,7 @@
 - [x] **Routes API**: `apiResource` sotto `api/v1/family-members`
 - [x] **ServiceProvider**: Caricamento migrations, views e routes del modulo
 - [x] **Fix**: Routes module wrappate in middleware group `web` + `auth` per risolvere `Undefined variable $errors` (mancava `ShareErrorsFromSession`)
+- [x] **User-FamilyMember association**: migration `add_user_id_to_family_members_table`, FK `user_id` → `users`. Se l'email del FamilyMember corrisponde a uno User, `user_id` viene impostato automaticamente in `store()`/`update()` (sia web che API)
 
 ### Struttura File
 
@@ -95,6 +97,7 @@ routes/
 | email | email | nullable |
 | indirizzo | text | nullable |
 | foto | string (path) | nullable, image mimes |
+| user_id | FK (users) | nullable, associato automaticamente se email corrisponde a User |
 | note | text | nullable |
 | deleted_at | timestamp | soft delete |
 

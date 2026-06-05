@@ -2,6 +2,7 @@
 
 namespace App\Modules\FamilyMembers\Controllers;
 
+use App\Models\User;
 use App\Modules\FamilyMembers\Models\FamilyMember;
 use App\Modules\FamilyMembers\Requests\StoreFamilyMemberRequest;
 use App\Modules\FamilyMembers\Requests\UpdateFamilyMemberRequest;
@@ -27,6 +28,8 @@ class FamilyMemberApiController extends Controller
             $data['foto'] = $request->file('foto')->store('family-members', 'public');
         }
 
+        $data['user_id'] = $this->resolveUserId($data);
+
         $member = FamilyMember::create($data);
 
         return response()->json($member, 201);
@@ -49,9 +52,20 @@ class FamilyMemberApiController extends Controller
             $data['foto'] = $request->file('foto')->store('family-members', 'public');
         }
 
+        $data['user_id'] = $this->resolveUserId($data);
+
         $familyMember->update($data);
 
         return response()->json($familyMember);
+    }
+
+    private function resolveUserId(array $data): ?int
+    {
+        if (empty($data['email'])) {
+            return null;
+        }
+
+        return User::where('email', $data['email'])->value('id');
     }
 
     public function destroy(FamilyMember $familyMember): JsonResponse

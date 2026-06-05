@@ -2,6 +2,7 @@
 
 namespace App\Modules\FamilyMembers\Controllers;
 
+use App\Models\User;
 use App\Modules\FamilyMembers\Models\FamilyMember;
 use App\Modules\FamilyMembers\Requests\StoreFamilyMemberRequest;
 use App\Modules\FamilyMembers\Requests\UpdateFamilyMemberRequest;
@@ -39,6 +40,8 @@ class FamilyMemberController extends Controller
             $data['foto'] = $request->file('foto')->store('family-members', 'public');
         }
 
+        $data['user_id'] = $this->resolveUserId($data);
+
         FamilyMember::create($data);
 
         return redirect()->route('family-members.index')
@@ -73,10 +76,21 @@ class FamilyMemberController extends Controller
             $data['foto'] = $request->file('foto')->store('family-members', 'public');
         }
 
+        $data['user_id'] = $this->resolveUserId($data);
+
         $familyMember->update($data);
 
         return redirect()->route('family-members.index')
             ->with('success', 'Membro della famiglia aggiornato con successo.');
+    }
+
+    private function resolveUserId(array $data): ?int
+    {
+        if (empty($data['email'])) {
+            return null;
+        }
+
+        return User::where('email', $data['email'])->value('id');
     }
 
     public function destroy(FamilyMember $familyMember): RedirectResponse
