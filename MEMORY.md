@@ -51,9 +51,19 @@ app/
 ├── Models/
 │   ├── User.php
 │   └── UserDashboardPreference.php
+│   │   ├── HomeController.php
+│   │   ├── DashboardController.php
+│   │   └── DashboardSettingsController.php
+├── Models/
+│   ├── User.php
+│   └── UserDashboardPreference.php
 ├── Modules/
 │   ├── ModuleInterface.php
 │   ├── ModuleManager.php
+│   ├── DashboardWidget.php
+│   ├── DashboardManager.php
+│   ├── FamilyMembers/
+│   └── Economy/
 │   ├── DashboardWidget.php
 │   ├── DashboardManager.php
 │   ├── FamilyMembers/
@@ -86,6 +96,15 @@ resources/
 └── lang/
     └── it/
         └── menu.php      # Traduzioni menu italiani
+└── adminlte.php          # use_route_url: true, route names per auth, menu Economia + Dashboard Settings
+resources/
+├── views/
+│   └── dashboard/
+│       ├── index.blade.php
+│       └── settings.blade.php
+└── lang/
+    └── it/
+        └── menu.php      # Traduzioni menu italiani
 database/
 ├── factories/
 │   └── FamilyMemberFactory.php
@@ -96,7 +115,10 @@ database/
     ├── 2026_06_05_000001_create_family_members_table.php
     ├── 2026_06_05_051545_create_personal_access_tokens_table.php
     └── 2026_06_05_110000_create_user_dashboard_preferences_table.php
+    ├── 2026_06_05_051545_create_personal_access_tokens_table.php
+    └── 2026_06_05_110000_create_user_dashboard_preferences_table.php
 routes/
+└── web.php               # Auth routes + dashboard + dashboard settings
 └── web.php               # Auth routes + dashboard + dashboard settings
 ```
 
@@ -175,6 +197,7 @@ routes/
 - [x] **View settings**: `resources/views/dashboard/settings.blade.php` — toggle, ordine, larghezza widget
 - [x] **Widget FamilyMembers**: `total-members` (totale membri + nuovi questo mese)
 - [x] **Widget Economy**: `monthly-income` (entrate mese), `monthly-expense` (spese mese), `monthly-balance` (bilancio), `recent-transactions` (ultime 5 transazioni), `categories-chart` (spese per categoria)
+- [x] **Fix**: campo `tipo` appartiene a `categories`, non a `transactions`. Le query dei widget usano `whereHas('category', fn($q) => $q->where('tipo', ...))` per filtrare entrate/spese
 - [x] **Menu AdminLTE**: voce "Impostazioni Dashboard" aggiunta
 - [x] **Home route** (`/`) → DashboardController (sostituisce HomeController vuoto)
 
