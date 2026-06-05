@@ -310,11 +310,6 @@ return [
             'route' => 'home',
         ],
         [
-            'text' => 'dashboard_settings',
-            'icon' => 'fas fa-fw fa-cog',
-            'route' => 'dashboard.settings',
-        ],
-        [
             'text' => 'family_members',
             'icon' => 'fas fa-fw fa-users',
             'route' => 'family-members.index',
@@ -350,6 +345,19 @@ return [
                     'text' => 'import_csv',
                     'icon' => 'fas fa-fw fa-file-csv',
                     'route' => 'economy.import.index',
+                ],
+            ],
+        ],
+        ['header' => 'settings'],
+        [
+            'text' => 'settings',
+            'icon' => 'fas fa-fw fa-cog',
+            'url' => '#',
+            'submenu' => [
+                [
+                    'text' => 'dashboard_settings',
+                    'icon' => 'fas fa-fw fa-tachometer-alt',
+                    'route' => 'dashboard.settings',
                 ],
             ],
         ],

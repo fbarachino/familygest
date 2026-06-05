@@ -2,7 +2,8 @@
 
 return [
     'dashboard' => 'Dashboard',
-    'dashboard_settings' => 'Impostazioni Dashboard',
+    'settings' => 'Impostazioni',
+    'dashboard_settings' => 'Dashboard',
     'family_members' => 'Membri Famiglia',
     'modules' => 'Moduli',
     'documents' => 'Documenti',
