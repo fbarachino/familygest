@@ -2,23 +2,27 @@
 
 namespace App\Providers;
 
+use App\Modules\FamilyMembers\FamilyMembersServiceProvider;
+use App\Modules\ModuleManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        //
+        $this->app->singleton(ModuleManager::class, function () {
+            return new ModuleManager;
+        });
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        $manager = $this->app->make(ModuleManager::class);
+
+        $manager->register(
+            new FamilyMembersServiceProvider($this->app)
+        );
+
+        $manager->boot();
     }
 }
