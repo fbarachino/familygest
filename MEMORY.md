@@ -27,6 +27,7 @@
 - [x] **Routes Web**: `resource` sotto `family-members`
 - [x] **Routes API**: `apiResource` sotto `api/v1/family-members`
 - [x] **ServiceProvider**: Caricamento migrations, views e routes del modulo
+- [x] **Fix**: Routes module wrappate in middleware group `web` + `auth` per risolvere `Undefined variable $errors` (mancava `ShareErrorsFromSession`)
 
 ### Struttura File
 
@@ -97,7 +98,7 @@ routes/
 | note | text | nullable |
 | deleted_at | timestamp | soft delete |
 
-### Rotte Web
+### Rotte Web (middleware: web + auth)
 - `GET /family-members` — index
 - `GET /family-members/create` — create form
 - `POST /family-members` — store

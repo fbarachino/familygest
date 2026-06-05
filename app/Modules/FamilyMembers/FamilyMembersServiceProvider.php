@@ -23,6 +23,7 @@ class FamilyMembersServiceProvider extends ServiceProvider implements ModuleInte
 
         $this->loadViewsFrom(__DIR__ . '/Views', 'family-members');
 
-        $this->loadRoutesFrom(__DIR__ . '/Routes/web.php');
+        \Illuminate\Support\Facades\Route::middleware('web')
+            ->group(fn () => $this->loadRoutesFrom(__DIR__ . '/Routes/web.php'));
     }
 }
