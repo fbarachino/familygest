@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Modules\Economy\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateCategoryRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'tipo' => ['required', 'string', 'in:entrata,spesa'],
+            'nome' => ['required', 'string', 'max:255'],
+            'icona' => ['nullable', 'string', 'max:100'],
+            'colore' => ['nullable', 'string', 'max:20'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'tipo' => 'tipo',
+            'nome' => 'nome',
+            'icona' => 'icona',
+            'colore' => 'colore',
+        ];
+    }
+}

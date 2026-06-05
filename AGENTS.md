@@ -62,8 +62,8 @@ config/
 ### Moduli Iniziali (In Sviluppo)
 - [x] **Auth** - Scaffolding autenticazione (login, register, password reset, email verify) con AdminLTE
 - [x] **FamilyMembers** - Gestione membri famiglia, profili e relazioni
+- [x] **Economy** - Gestione delle entrate e delle uscite con rendicontazione mensile in base alle categorie
 - [ ] **Documents** - Gestione documenti, archivio digitale con export PDF
-- [ ] **Economy** - Gestione delle entrate e delle uscite con rendicontazione mensile in base alle categorie
 
 ### Moduli Futuri (Placeholder)
 - [ ] [Modulo aggiuntivo 1]
@@ -97,13 +97,35 @@ config/
 3. ✅ Creazione primo modulo (FamilyMembers)
 4. ✅ Auth scaffolding (login/register/password-reset/verify con AdminLTE)
 5. ✅ Setup AdminLTE e dashboard
-6. ⏳ Configurazione backup automatici
-7. ⏳ Integrazione dompdf per export
-8. ⏳ Testing e ottimizzazione
+6. ✅ Dashboard dinamica con widget modulari e impostazioni utente
+7. ✅ Modulo Economy (account, categorie, transazioni, import CSV)
+8. ⏳ Configurazione backup automatici
+9. ⏳ Integrazione dompdf per export
+10. ⏳ Testing e ottimizzazione
+
+## 📊 Sistema Dashboard
+
+La dashboard è **dinamica e modulare**: ogni modulo può registrare widget che vengono visualizzati automaticamente.
+
+### Come aggiungere un widget da un modulo
+
+1. Il modulo implementa `getDashboardWidgets()` nel suo ServiceProvider
+2. Restituisce un array di `DashboardWidget` con: id, title, icon, view, width, dataCallback
+3. Il widget view va in `Modules/[Nome]/Views/dashboard/widgets/`
+4. Il `DashboardManager` registra automaticamente i widget in fase di boot
+
+### Preferenze Utente
+
+Ogni utente può personalizzare la propria dashboard da `/dashboard/settings`:
+- Attivare/disattivare widget
+- Riordinare i widget (freccia su/giù)
+- Personalizzare la larghezza (3, 4, 6, 8, 12 colonne)
+
+Le preferenze sono salvate nella tabella `user_dashboard_preferences`.
 
 ## 📝 Note per lo Sviluppo
 
 - I nuovi moduli possono essere aggiunti in qualsiasi momento
-- Ogni modulo deve implementare `ModuleInterface`
+- Ogni modulo deve implementare `ModuleInterface` (incluso `getDashboardWidgets()`)
 - I moduli vengono registrati automaticamente in `modules.php`
 - Seguire il pattern SOLID e clean code principles

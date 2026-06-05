@@ -45,11 +45,19 @@ app/
 │   │   │   ├── ConfirmPasswordController.php
 │   │   │   └── VerificationController.php
 │   │   ├── Controller.php              # Estende Illuminate\Routing\Controller
-│   │   └── HomeController.php
+│   │   ├── HomeController.php
+│   │   ├── DashboardController.php
+│   │   └── DashboardSettingsController.php
+├── Models/
+│   ├── User.php
+│   └── UserDashboardPreference.php
 ├── Modules/
 │   ├── ModuleInterface.php
 │   ├── ModuleManager.php
-│   └── FamilyMembers/
+│   ├── DashboardWidget.php
+│   ├── DashboardManager.php
+│   ├── FamilyMembers/
+│   └── Economy/
 │       ├── FamilyMembersServiceProvider.php
 │       ├── Controllers/
 │       │   ├── FamilyMemberController.php
@@ -69,7 +77,15 @@ app/
 │           └── show.blade.php
 config/
 ├── modules.php
-└── adminlte.php          # use_route_url: true, route names per auth
+└── adminlte.php          # use_route_url: true, route names per auth, menu Economia + Dashboard Settings
+resources/
+├── views/
+│   └── dashboard/
+│       ├── index.blade.php
+│       └── settings.blade.php
+└── lang/
+    └── it/
+        └── menu.php      # Traduzioni menu italiani
 database/
 ├── factories/
 │   └── FamilyMemberFactory.php
@@ -78,9 +94,10 @@ database/
     ├── 0001_01_01_000001_create_cache_table.php
     ├── 0001_01_01_000002_create_jobs_table.php
     ├── 2026_06_05_000001_create_family_members_table.php
-    └── 2026_06_05_051545_create_personal_access_tokens_table.php
+    ├── 2026_06_05_051545_create_personal_access_tokens_table.php
+    └── 2026_06_05_110000_create_user_dashboard_preferences_table.php
 routes/
-└── web.php               # Auth routes (guest + auth groups)
+└── web.php               # Auth routes + dashboard + dashboard settings
 ```
 
 ### Campi Modello FamilyMember
@@ -130,8 +147,38 @@ routes/
 - [x] **Controller base aggiornato**: estende `Illuminate\Routing\Controller`, usa `AuthorizesRequests` + `ValidatesRequests`
 - [x] **Tests**: login page e home autenticata funzionanti
 
+#### Modulo Economy
+- [x] **Migration**: `account_types`, `categories`, `transactions` con FK e soft delete
+- [x] **Models**: `AccountType` (con `hasMany Transaction`), `Category` (con `hasMany Transaction`, enum `tipo: entrata/spesa`), `Transaction` (con `belongsTo AccountType`, `belongsTo Category`, `SoftDeletes`)
+- [x] **Form Requests**: Store/Update per ogni model con validazione
+- [x] **Web Controllers**: CRUD per AccountTypes, Categories, Transactions
+- [x] **API Controllers**: CRUD JSON sotto `api/v1/economy/*` (auth:sanctum)
+- [x] **Views**: CRUD con AdminLTE per ogni risorsa (index, create, edit, show)
+- [x] **Routes Web**: `economy/account-types`, `economy/categories`, `economy/transactions`, `economy/import` (auth)
+- [x] **Routes API**: `api/v1/economy/account-types`, `api/v1/economy/categories`, `api/v1/economy/transactions` (auth:sanctum)
+- [x] **ServiceProvider**: `EconomyServiceProvider` caricamento migrations, views, routes web
+- [x] **CSV Import**: upload file, rilevamento automatico delimitatore, preview prime 10 righe, mappatura colonne → campi DB (data, importo, descrizione, note), import transazionale
+- [x] **Menu AdminLTE**: sottomenu Economia con Tipi Conto, Categorie, Movimenti, Importa CSV
+- [x] **Lang**: `resources/lang/it/menu.php` traduzioni menu italiani
+- [x] **Seeders**: `AccountTypeSeeder` (7 tipi predefiniti), `CategorySeeder` (8 entrate + 16 spese)
+
+#### Dashboard Dinamica
+- [x] **DashboardWidget** (`app/Modules/DashboardWidget.php`) — Value object con: id, title, description, icon, view, width, dataCallback, enabledByDefault
+- [x] **ModuleInterface** aggiornato con `getDashboardWidgets(): array` — ogni modulo dichiara i propri widget
+- [x] **DashboardManager** (`app/Modules/DashboardManager.php`) — Service singleton che registra widget dai moduli, filtra per utente, sincronizza preferenze
+- [x] **Migration**: `user_dashboard_preferences` (user_id, widget_id, enabled, order, column_width)
+- [x] **Model**: `UserDashboardPreference` con relazione `belongsTo User`
+- [x] **User Model**: relazione `hasMany UserDashboardPreference`
+- [x] **DashboardController**: renderizza dashboard con widget attivi per l'utente, esegue dataCallback per ogni widget
+- [x] **DashboardSettingsController**: pagina impostazioni con toggle on/off, riordino drag, larghezza personalizzabile
+- [x] **View dashboard**: `resources/views/dashboard/index.blade.php` — renderizza widget in card AdminLTE
+- [x] **View settings**: `resources/views/dashboard/settings.blade.php` — toggle, ordine, larghezza widget
+- [x] **Widget FamilyMembers**: `total-members` (totale membri + nuovi questo mese)
+- [x] **Widget Economy**: `monthly-income` (entrate mese), `monthly-expense` (spese mese), `monthly-balance` (bilancio), `recent-transactions` (ultime 5 transazioni), `categories-chart` (spese per categoria)
+- [x] **Menu AdminLTE**: voce "Impostazioni Dashboard" aggiunta
+- [x] **Home route** (`/`) → DashboardController (sostituisce HomeController vuoto)
+
 ### Prossimi Passi (da fare)
 - [ ] Modulo Documents con export PDF
-- [ ] Modulo Economy con entrate/uscite e categorie
 - [ ] Configurazione backup (spatie/laravel-backup)
 - [ ] Testing e ottimizzazione

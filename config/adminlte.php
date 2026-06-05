@@ -310,6 +310,11 @@ return [
             'route' => 'home',
         ],
         [
+            'text' => 'dashboard_settings',
+            'icon' => 'fas fa-fw fa-cog',
+            'route' => 'dashboard.settings',
+        ],
+        [
             'text' => 'family_members',
             'icon' => 'fas fa-fw fa-users',
             'route' => 'family-members.index',
@@ -325,7 +330,28 @@ return [
             'text' => 'economy',
             'icon' => 'fas fa-fw fa-chart-line',
             'url' => '#',
-            'disabled' => true,
+            'submenu' => [
+                [
+                    'text' => 'account_types',
+                    'icon' => 'fas fa-fw fa-piggy-bank',
+                    'route' => 'economy.account-types.index',
+                ],
+                [
+                    'text' => 'categories',
+                    'icon' => 'fas fa-fw fa-tags',
+                    'route' => 'economy.categories.index',
+                ],
+                [
+                    'text' => 'transactions',
+                    'icon' => 'fas fa-fw fa-exchange-alt',
+                    'route' => 'economy.transactions.index',
+                ],
+                [
+                    'text' => 'import_csv',
+                    'icon' => 'fas fa-fw fa-file-csv',
+                    'route' => 'economy.import.index',
+                ],
+            ],
         ],
     ],
 

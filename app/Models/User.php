@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(FamilyMember::class);
     }
+
+    public function dashboardPreferences(): HasMany
+    {
+        return $this->hasMany(UserDashboardPreference::class);
+    }
 }

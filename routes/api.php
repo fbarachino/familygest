@@ -9,4 +9,5 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     require base_path('app/Modules/FamilyMembers/Routes/api.php');
+    require base_path('app/Modules/Economy/Routes/api.php');
 });
