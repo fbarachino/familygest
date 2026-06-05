@@ -60,7 +60,8 @@ config/
 ## 📦 Moduli Previsti
 
 ### Moduli Iniziali (In Sviluppo)
-- [ ] **FamilyMembers** - Gestione membri famiglia, profili e relazioni
+- [x] **Auth** - Scaffolding autenticazione (login, register, password reset, email verify) con AdminLTE
+- [x] **FamilyMembers** - Gestione membri famiglia, profili e relazioni
 - [ ] **Documents** - Gestione documenti, archivio digitale con export PDF
 - [ ] **Economy** - Gestione delle entrate e delle uscite con rendicontazione mensile in base alle categorie
 
@@ -92,12 +93,13 @@ config/
 ## 🚀 Roadmap Sviluppo
 
 1. ✅ Setup infrastruttura base Laravel 13
-2. ⏳ Implementazione sistema modulare
-3. ⏳ Creazione primo modulo (FamilyMembers)
-4. ⏳ Setup AdminLTE e dashboard
-5. ⏳ Configurazione backup automatici
-6. ⏳ Integrazione dompdf per export
-7. ⏳ Testing e ottimizzazione
+2. ✅ Implementazione sistema modulare
+3. ✅ Creazione primo modulo (FamilyMembers)
+4. ✅ Auth scaffolding (login/register/password-reset/verify con AdminLTE)
+5. ✅ Setup AdminLTE e dashboard
+6. ⏳ Configurazione backup automatici
+7. ⏳ Integrazione dompdf per export
+8. ⏳ Testing e ottimizzazione
 
 ## 📝 Note per lo Sviluppo
 

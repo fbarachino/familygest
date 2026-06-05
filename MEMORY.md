@@ -32,6 +32,17 @@
 
 ```
 app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Auth/
+│   │   │   ├── LoginController.php
+│   │   │   ├── RegisterController.php
+│   │   │   ├── ForgotPasswordController.php
+│   │   │   ├── ResetPasswordController.php
+│   │   │   ├── ConfirmPasswordController.php
+│   │   │   └── VerificationController.php
+│   │   ├── Controller.php              # Estende Illuminate\Routing\Controller
+│   │   └── HomeController.php
 ├── Modules/
 │   ├── ModuleInterface.php
 │   ├── ModuleManager.php
@@ -55,12 +66,18 @@ app/
 │           └── show.blade.php
 config/
 ├── modules.php
-└── adminlte.php          # Configurato con titolo FamilyGest, menu Family Members
+└── adminlte.php          # use_route_url: true, route names per auth
 database/
 ├── factories/
 │   └── FamilyMemberFactory.php
 └── migrations/
-    └── 2026_06_05_000001_create_family_members_table.php
+    ├── 0001_01_01_000000_create_users_table.php
+    ├── 0001_01_01_000001_create_cache_table.php
+    ├── 0001_01_01_000002_create_jobs_table.php
+    ├── 2026_06_05_000001_create_family_members_table.php
+    └── 2026_06_05_051545_create_personal_access_tokens_table.php
+routes/
+└── web.php               # Auth routes (guest + auth groups)
 ```
 
 ### Campi Modello FamilyMember
@@ -96,8 +113,20 @@ database/
 - `PUT/PATCH /api/v1/family-members/{id}` — update
 - `DELETE /api/v1/family-members/{id}` — destroy
 
+### Auth Scaffolding
+- [x] **LoginController** — `showLoginForm()` + `login()` + `logout()`
+- [x] **RegisterController** — `showRegistrationForm()` + `register()` (con validazione, creazione utente, login automatico)
+- [x] **ForgotPasswordController** — `showLinkRequestForm()` + `sendResetLinkEmail()` (via `Password::sendResetLink`)
+- [x] **ResetPasswordController** — `showResetForm()` + `reset()` (via `Password::reset`)
+- [x] **ConfirmPasswordController** — `showConfirmForm()` + `confirm()`
+- [x] **VerificationController** — `show()` + `verify()` + `resend()` (email verification)
+- [x] **HomeController** — Dashboard protetta da `auth` middleware
+- [x] **Routes** — Rotte guest (login, register, password reset) e auth (logout, confirm, verify, home)
+- [x] **Config `adminlte.php`**: `use_route_url => true`, URL aggiornati con nomi route corretti
+- [x] **Controller base aggiornato**: estende `Illuminate\Routing\Controller`, usa `AuthorizesRequests` + `ValidatesRequests`
+- [x] **Tests**: login page e home autenticata funzionanti
+
 ### Prossimi Passi (da fare)
-- [ ] Auth scaffolding (login/register AdminLTE)
 - [ ] Modulo Documents con export PDF
 - [ ] Modulo Economy con entrate/uscite e categorie
 - [ ] Configurazione backup (spatie/laravel-backup)
